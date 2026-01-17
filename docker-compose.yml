@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: race-standings-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+    environment:
+      - PROJECT_NAME=Race Standings API
+      - VERSION=1.0.0
+      - API_V1_STR=/api/v1
+      - BACKEND_CORS_ORIGINS=["http://localhost:5173","http://localhost:3000","http://localhost:8080"]
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - race-standings-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: race-standings-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - race-standings-network
+
+networks:
+  race-standings-network:
+    driver: bridge
