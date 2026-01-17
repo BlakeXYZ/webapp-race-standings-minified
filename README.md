@@ -1,0 +1,2 @@
+# webapp-race-standings-minified
+
