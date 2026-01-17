@@ -12,6 +12,12 @@ RUN npm install
 # Copy source code
 COPY . .
 
+# STUB: Set production API URL as build argument
+# On VPS: docker build --build-arg VITE_API_URL=https://yourdomain.com
+# Backend will be at yourdomain.com/api (proxied by Nginx to backend:8000)
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 # Build the application
 RUN npm run build
 

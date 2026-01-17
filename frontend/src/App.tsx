@@ -54,8 +54,13 @@ function App() {
     // This function gets data from the backend API
     const fetchStandings = async () => {
       try {
+        // API URL: In dev uses proxy, in production uses env variable
+        const apiUrl = import.meta.env.VITE_API_URL 
+          ? `${import.meta.env.VITE_API_URL}/api/v1/standings/`
+          : '/api/v1/standings/'
+        
         // Call the backend API (like using fetch() in vanilla JS)
-        const response = await fetch('/api/v1/standings/')
+        const response = await fetch(apiUrl)
         
         // Check if request was successful
         if (!response.ok) {
@@ -67,7 +72,7 @@ function App() {
         
         // Update the standings variable with the data we got
         setStandings(data.standings)
-        
+
         // We're done loading
         setLoading(false)
         

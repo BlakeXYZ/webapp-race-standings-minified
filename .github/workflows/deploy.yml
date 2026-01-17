@@ -114,9 +114,11 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}      # Don't push on PRs
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
-          # STUB: Add build arguments for runtime config
-          # build-args: |
-          #   VITE_API_URL=${{ secrets.PRODUCTION_API_URL }}
+          # Pass production API URL at build time
+          # STUB: Add GitHub secret PRODUCTION_API_URL = https://yourdomain.com
+          # Backend will be proxied at yourdomain.com/api by Nginx on VPS
+          build-args: |
+            VITE_API_URL=${{ secrets.PRODUCTION_API_URL }}
 
 
 # ==============================================================================

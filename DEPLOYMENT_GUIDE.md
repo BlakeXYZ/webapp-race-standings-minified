@@ -280,6 +280,7 @@ server {
     }
 
     location /api {
+        # Proxy all /api requests to the backend container
         proxy_pass http://backend:8000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
