@@ -9,6 +9,7 @@ import {
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu"
 import EventsDropDownItems from '@/components/events/EventsDropDownItems'
+import { ModeToggle } from '@/components/mode-toggle/mode-toggle'
 
 export default function Header() {
   return (
@@ -35,12 +36,14 @@ export default function Header() {
             </li>
             <li><Link to="/standings" className="hover:text-blue-400 transition-colors">Standings</Link></li>
             <li><Link to="/about" className="hover:text-blue-400 transition-colors">About</Link></li>
+            <li><ModeToggle /></li>
             
           </ul>
 
-          {/* Mobile Dropdown */}
+          {/* Mobile Menu + Mode Toggle*/}
+        <div className="flex items-center md:hidden">
           <DropdownMenu>
-            <DropdownMenuTrigger className="md:hidden bg-slate-800 px-4 py-2 rounded hover:bg-slate-700">
+            <DropdownMenuTrigger className="px-4 py-2 rounded hover:bg-slate-800">
               Menu ☰
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48">
@@ -67,6 +70,10 @@ export default function Header() {
               
             </DropdownMenuContent>
           </DropdownMenu>
+            <ModeToggle />
+          </div>
+
+
         </div>
       </nav>
     </header>
