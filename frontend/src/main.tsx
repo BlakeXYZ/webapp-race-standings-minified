@@ -5,6 +5,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'           // Our main component (the page)
 import './index.css'                   // Global styles (Tailwind CSS)
 
@@ -19,9 +20,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   
   // StrictMode helps catch bugs during development (optional)
   <React.StrictMode>
-    {/* This loads our App component from App.tsx */}
-    <App />
-    
+    <BrowserRouter>
+        {/* This loads our App component from App.tsx */}
+        <App />
+    </BrowserRouter>
     {/* STUB: Add global providers here if needed */}
     {/* Example: <ThemeProvider>, <AuthProvider>, <Router>, etc. */}
   </React.StrictMode>,
