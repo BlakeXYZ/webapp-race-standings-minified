@@ -99,15 +99,13 @@ export default function StandingsPage() {
   // ------------------------------------------------------------------
   
   return (
-    // OUTER CONTAINER - Full screen with gradient background
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-8">
-      
-      {/* CENTERED CONTENT - Max width container */}
-      <div className="max-w-4xl mx-auto">
+    // CENTERED CONTENT - Max width container
+    // Layout component now handles padding and background
+    <div className="max-w-4xl mx-auto">
         
         {/* PAGE TITLE */}
         <h1 className="text-4xl font-bold text-center mb-8 text-slate-900 dark:text-slate-100">
-          Race Standings
+          Season Standings
           {/* STUB: Customize title text here */}
         </h1>
         
@@ -116,7 +114,7 @@ export default function StandingsPage() {
           
           {/* CARD HEADER */}
           <CardHeader>
-            <CardTitle>Current Championship Standings</CardTitle>
+            <CardTitle>Current Standings</CardTitle>
             <CardDescription>Latest driver rankings and points</CardDescription>
             {/* STUB: Add more header elements here if needed */}
           </CardHeader>
@@ -186,7 +184,6 @@ export default function StandingsPage() {
         {/* STUB: Add more cards/sections below */}
         {/* Example: Recent races, upcoming events, etc. */}
         
-      </div>
     </div>
   )
 }

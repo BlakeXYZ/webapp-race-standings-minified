@@ -1,54 +1,114 @@
+// ============================================================================
+// IMPORTS - Bringing in tools we need
+// ============================================================================
+
+// Link: Allows navigation between pages without full page reload (like <a> in HTML)
+// This is from React Router - it changes the URL but doesn't refresh the page
 import { Link } from 'react-router-dom'
+
+// Import our pre-made card components (these are just styled divs)
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
+// Import our EventList component - handles event fetching and display
+// This keeps HomePage.tsx clean by separating event logic into its own file
+import EventList from '@/components/events/EventList'
+
+
+
+// ============================================================================
+// HOME PAGE COMPONENT - Landing page for the app
+// ============================================================================
+
 export default function HomePage() {
+  
+  // ------------------------------------------------------------------
+  // RENDER - This is the HTML that gets displayed
+  // Everything below "return" is just HTML with some JS mixed in
+  // No state needed here - EventList component handles its own data
+  // ------------------------------------------------------------------
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-8">
-      <div className="max-w-4xl mx-auto">
+    // CENTERED CONTENT - Max width container
+    // max-w-4xl limits the width, mx-auto centers it
+    // Layout component now handles padding and background
+    <div className="max-w-4xl mx-auto">
         
-        {/* Hero Section */}
+        {/* ============================================================ */}
+        {/* HERO SECTION - Main welcome message at top of page */}
+        {/* ============================================================ */}
         <div className="text-center mb-12">
+          {/* Main heading - text-5xl makes it big, font-bold makes it thick */}
           <h1 className="text-5xl font-bold mb-4 text-slate-900 dark:text-slate-100">
-            Welcome to Race Standings
+            Austin Rally Project Event Standings
           </h1>
+          {/* Subheading - smaller text with lighter color */}
           <p className="text-xl text-slate-600 dark:text-slate-400">
-            Track your favorite drivers and teams in real-time
+            Track your laptimes and standings in real-time
           </p>
         </div>
 
-        {/* Feature Cards */}
+        {/* ============================================================ */}
+        {/* EVENT LIST SECTION - Shows upcoming events from API */}
+        {/* ============================================================ */}
+        {/* EventList is a separate component that handles its own data fetching */}
+        {/* This keeps HomePage.tsx clean and focused on layout only */}
+        {/* Full width section - placed before the feature cards */}
+        <div className="mb-8">
+          <EventList />
+        </div>
+
+        {/* ============================================================ */}
+        {/* FEATURE CARDS GRID - Two cards side by side */}
+        {/* ============================================================ */}
+        {/* grid creates a grid layout, md:grid-cols-2 means 2 columns on medium+ screens */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           
-          <Card className="hover:shadow-lg transition-shadow">
+          {/* CARD 1 - Link to Standings Page */}
+          {/* hover:shadow-lg adds shadow on hover, transition-shadow animates it */}
+          {/* flex flex-col makes the card a vertical flex container */}
+          <Card className="hover:shadow-lg transition-shadow flex flex-col">
+            
+            {/* Card Header - Title and description */}
             <CardHeader>
-              <CardTitle>Live Standings</CardTitle>
-              <CardDescription>Real-time championship rankings</CardDescription>
+              <CardTitle>Season Standings</CardTitle>
+              <CardDescription>View current driver standings, points, and rankings updated in real-time.</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-slate-700 dark:text-slate-300 mb-4">
+            
+            {/* Card Body - Main content */}
+            {/* flex-1 makes this grow to fill available space, pushing button down */}
+            <CardContent className="flex-1 flex flex-col">
+              {/* Description text */}
+              {/* <p className="text-slate-700 dark:text-slate-300 mb-4">
                 View current driver standings, points, and rankings updated in real-time.
               </p>
+               */}
+              {/* Link Button - Navigate to /standings page */}
+              {/* to="/standings" is like href in <a> tag, but doesn't reload page */}
+              {/* mt-auto pushes this to the bottom, self-start prevents stretching to full width */}
               <Link 
                 to="/standings" 
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors mt-auto self-start"
               >
                 View Standings →
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
+          {/* CARD 2 - Link to About Page */}
+          {/* flex flex-col makes the card a vertical flex container */}
+          <Card className="hover:shadow-lg transition-shadow flex flex-col">
             <CardHeader>
-              <CardTitle>About This App</CardTitle>
+              <CardTitle>About</CardTitle>
               <CardDescription>Learn more about the project</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-slate-700 dark:text-slate-300 mb-4">
-                Built with React, FastAPI, and modern web technologies.
-              </p>
+            {/* flex-1 makes this grow to fill available space, pushing button down */}
+            <CardContent className="flex-1 flex flex-col">
+              
+              {/* Link Button - Navigate to /about page */}
+              {/* mt-auto pushes this to the bottom, self-start prevents stretching to full width */}
               <Link 
                 to="/about" 
-                className="inline-block bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors"
+                className="mt-auto inline-block bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors self-start"
               >
                 Learn More →
               </Link>
@@ -57,30 +117,63 @@ export default function HomePage() {
 
         </div>
 
-        {/* Quick Stats Placeholder */}
+        {/* ============================================================ */}
+        {/* QUICK STATS SECTION - Shows placeholder numbers */}
+        {/* ============================================================ */}
         <Card>
           <CardHeader>
             <CardTitle>Quick Stats</CardTitle>
+            {/* STUB: These are placeholder numbers - replace with real data later */}
           </CardHeader>
           <CardContent>
+            {/* Grid with 3 columns - each column shows a stat */}
             <div className="grid grid-cols-3 gap-4 text-center">
+              
+              {/* STAT 1 - Drivers */}
               <div>
+                {/* Big number on top */}
                 <div className="text-3xl font-bold text-blue-600">20</div>
+                {/* Label below */}
                 <div className="text-sm text-slate-600 dark:text-slate-400">Drivers</div>
               </div>
+              
+              {/* STAT 2 - Teams */}
               <div>
                 <div className="text-3xl font-bold text-green-600">10</div>
                 <div className="text-sm text-slate-600 dark:text-slate-400">Teams</div>
               </div>
+              
+              {/* STAT 3 - Races */}
               <div>
                 <div className="text-3xl font-bold text-purple-600">23</div>
                 <div className="text-sm text-slate-600 dark:text-slate-400">Races</div>
               </div>
+              
+              {/* STUB: Replace these numbers with real data from API */}
+              {/* Example: Use useState + useEffect to fetch stats from backend */}
             </div>
           </CardContent>
         </Card>
 
-      </div>
+        {/* STUB: Add more sections here */}
+        {/* Example: Recent races, upcoming events, news feed, etc. */}
+
     </div>
   )
 }
+
+// ============================================================================
+// NOTES FOR BEGINNERS:
+// ============================================================================
+// - This is a "container" page - it imports and composes other components
+// - EventList component handles its own data fetching (separation of concerns)
+// - This keeps HomePage.tsx clean and focused on layout/structure
+// - You can reuse EventList in other pages by importing it
+// - The <Link> component is from React Router - it's like <a> but faster
+// - className is how we apply CSS in React (same as "class" in HTML)
+// - Tailwind CSS classes are used for styling (e.g., text-5xl, bg-blue-600)
+// - Component composition: Build pages from smaller, reusable components
+// ============================================================================
+// ============================================================================
+// END OF FILE
+// ============================================================================

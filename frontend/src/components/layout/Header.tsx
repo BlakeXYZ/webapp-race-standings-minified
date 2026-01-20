@@ -1,16 +1,72 @@
 import { Link } from 'react-router-dom'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+} from "@/components/ui/dropdown-menu"
+import EventsDropDownItems from '@/components/events/EventsDropDownItems'
 
 export default function Header() {
   return (
-    <header className="bg-slate-900 text-white shadow-lg">
+    <header className="sticky top-0 z-50 bg-slate-900 text-white shadow-lg">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold">Race Standings App</Link>
-          <ul className="flex gap-6">
+          <Link to="/" className="text-xl font-bold ">Race Standings App</Link>
+
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex gap-6 items-center">
             <li><Link to="/" className="hover:text-blue-400 transition-colors">Home</Link></li>
+            {/* Desktop Events Dropdown */}
+            <li>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="hover:text-blue-400 transition-colors cursor-pointer">
+                    Events ▾
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <EventsDropDownItems />
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </li>
             <li><Link to="/standings" className="hover:text-blue-400 transition-colors">Standings</Link></li>
             <li><Link to="/about" className="hover:text-blue-400 transition-colors">About</Link></li>
+            
           </ul>
+
+          {/* Mobile Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="md:hidden bg-slate-800 px-4 py-2 rounded hover:bg-slate-700">
+              Menu ☰
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48">
+
+              <DropdownMenuItem asChild>
+                <Link to="/" className='cursor-pointer'>Home</Link>
+              </DropdownMenuItem>
+
+              {/* Nested Events Submenu for Mobile */}
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Events</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                    <EventsDropDownItems />
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+
+              <DropdownMenuItem asChild>
+                <Link to="/standings" className='cursor-pointer'>Standings</Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild>
+                <Link to="/about" className='cursor-pointer'>About</Link>
+              </DropdownMenuItem>
+              
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </nav>
     </header>

@@ -7,6 +7,7 @@
 
 from fastapi import APIRouter
 from app.api.routes import standings  # Import the standings routes file
+from app.api.routes import events    # Import the events routes file
 
 # STUB: Import more route files here as you create them
 # from app.api.routes import drivers, teams, races, etc.
@@ -31,6 +32,13 @@ api_router.include_router(
     standings.router,           # The router from standings.py
     prefix="/standings",        # All routes will start with /standings
     tags=["standings"]          # Groups these routes in API docs
+)
+
+# Add events routes: /api/v1/events/
+api_router.include_router(
+    events.router,              # The router from events.py
+    prefix="/events",           # All routes will start with /events
+    tags=["events"]             # Groups these routes in API docs
 )
 
 # STUB: Add more routers here

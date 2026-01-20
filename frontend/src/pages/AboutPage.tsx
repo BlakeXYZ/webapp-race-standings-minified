@@ -1,91 +1,126 @@
+// ============================================================================
+// IMPORTS - Bringing in tools we need
+// ============================================================================
+
+// Import our pre-made card components (these are just styled divs)
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
+
+// ============================================================================
+// ABOUT PAGE COMPONENT - Information about the project
+// ============================================================================
+
 export default function AboutPage() {
+  
+  // ------------------------------------------------------------------
+  // RENDER - This is the HTML that gets displayed
+  // This is a simple informational page with no interactive elements
+  // No state or effects needed - just displays static content
+  // ------------------------------------------------------------------
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-8">
-      <div className="max-w-4xl mx-auto">
+    // CENTERED CONTENT - Max width container
+    // max-w-4xl limits width to 896px, mx-auto centers it horizontally
+    // Layout component now handles padding and background
+    <div className="max-w-4xl mx-auto">
         
+        {/* PAGE TITLE */}
+        {/* text-center: center align text */}
+        {/* mb-8: margin-bottom of 2rem (32px) */}
         <h1 className="text-4xl font-bold text-center mb-8 text-slate-900 dark:text-slate-100">
-          About This Project
+          About
         </h1>
 
-        {/* Project Overview */}
+        {/* ============================================================ */}
+        {/* SECTION 1: PROJECT OVERVIEW */}
+        {/* ============================================================ */}
+        {/* mb-6: margin-bottom of 1.5rem (24px) for spacing between cards */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-slate-700 dark:text-slate-300 mb-4">
-              This is a full-stack web application that displays race standings in real-time.
-              It demonstrates modern web development practices using React for the frontend
-              and FastAPI for the backend.
-            </p>
-          </CardContent>
-        </Card>
+            {/* Project description paragraph */}
+            <div className="text-slate-700 dark:text-slate-300 space-y-4">
+              <p>
+                Austin Rally Project is an off-road track dedicated to Rallycross. The track is located just 40 minutes North East of Austin, Texas.
+              </p>
 
-        {/* Tech Stack */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Technology Stack</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100">Frontend</h3>
-                <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 space-y-1">
-                  <li>React 18 with TypeScript</li>
-                  <li>Vite for build tooling</li>
-                  <li>Tailwind CSS for styling</li>
-                  <li>shadcn/ui components</li>
-                  <li>React Router for navigation</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100">Backend</h3>
-                <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 space-y-1">
-                  <li>FastAPI (Python)</li>
-                  <li>RESTful API architecture</li>
-                  <li>Docker containerization</li>
-                  <li>CORS enabled</li>
-                  <li>Auto-generated docs</li>
-                </ul>
-              </div>
+            <p>
+                <a 
+                  href="https://maps.app.goo.gl/bqBcJzuWWCKiYYAE7"
+                    className="text-blue-600 hover:underline dark:text-blue-400"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  1500 FM 1466,<br />Coupland, TX 78615
+                </a>
+            </p>
+                
+
+
+
+
             </div>
           </CardContent>
         </Card>
-
-        {/* Features */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Features</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 space-y-2">
-              <li>Real-time race standings display</li>
-              <li>Responsive design for mobile and desktop</li>
-              <li>Dark mode support</li>
-              <li>Docker-based development environment</li>
-              <li>Hot reload for rapid development</li>
-              <li>Type-safe code with TypeScript</li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        {/* Contact/Links */}
+       
+        {/* ============================================================ */}
+        {/* SECTION 4: LINKS & RESOURCES */}
+        {/* ============================================================ */}
         <Card>
           <CardHeader>
             <CardTitle>Links & Resources</CardTitle>
           </CardHeader>
           <CardContent>
+            {/* Container with vertical spacing */}
             <div className="space-y-2 text-slate-700 dark:text-slate-300">
-              <p><strong>API Documentation:</strong> <a href="http://localhost:8000/docs" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">http://localhost:8000/docs</a></p>
-              <p><strong>Frontend Port:</strong> 5173</p>
-              <p><strong>Backend Port:</strong> 8000</p>
+              
+              <p>
+                <strong>Primary website:</strong>
+                <br />
+                <a 
+                  href="https://austinrallyproject.wixsite.com/home"
+                    className="text-blue-600 hover:underline dark:text-blue-400"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  austinrallyproject.wixsite.com/home
+                </a>
+              </p>
+              
+
+              <p>
+                <strong>Event registration:</strong>
+                <br />
+                <a 
+                  href="https://tinyurl.com/Rallycross-ARP" 
+                  className="text-blue-600 hover:underline dark:text-blue-400"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  tinyurl.com/Rallycross-ARP
+                </a>
+              </p>
+
             </div>
           </CardContent>
         </Card>
 
-      </div>
+        {/* STUB: Add more sections as needed */}
+        {/* Example: Team members, Changelog, Contributing guidelines, etc. */}
+
     </div>
   )
 }
+
+// ============================================================================
+// NOTES FOR BEGINNERS:
+// ============================================================================
+// - This is a "stateless" component (no useState/useEffect)
+// - Only displays static information - no data fetching needed
+// - Cards are used to organize content into sections
+// - The grid layout automatically becomes 1 column on mobile (responsive)
+// - Dark mode classes (dark:...) automatically apply when dark mode is on
+// - All content is hardcoded - you could move this to a CMS or config file
+// ============================================================================
