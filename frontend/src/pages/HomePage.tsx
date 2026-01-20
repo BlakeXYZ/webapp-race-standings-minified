@@ -43,7 +43,7 @@ export default function HomePage() {
           </h1>
           {/* Subheading - smaller text with lighter color */}
           <p className="text-xl text-slate-600 dark:text-slate-400">
-            Track your laptimes and standings in real-time
+            Track your laptimes and standings in real-time.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export default function HomePage() {
           {/* CARD 1 - Link to Standings Page */}
           {/* hover:shadow-lg adds shadow on hover, transition-shadow animates it */}
           {/* flex flex-col makes the card a vertical flex container */}
-          <Card className="hover:shadow-lg transition-shadow flex flex-col">
+          <Card className="flex flex-col">
             
             {/* Card Header - Title and description */}
             <CardHeader>
@@ -96,10 +96,10 @@ export default function HomePage() {
 
           {/* CARD 2 - Link to About Page */}
           {/* flex flex-col makes the card a vertical flex container */}
-          <Card className="hover:shadow-lg transition-shadow flex flex-col">
+          <Card className="flex flex-col">
             <CardHeader>
               <CardTitle>About</CardTitle>
-              <CardDescription>Learn more about the project</CardDescription>
+              <CardDescription>Learn more about Austin Rally Project.</CardDescription>
             </CardHeader>
             {/* flex-1 makes this grow to fill available space, pushing button down */}
             <CardContent className="flex-1 flex flex-col">
@@ -123,7 +123,7 @@ export default function HomePage() {
         <Card>
           <CardHeader>
             <CardTitle>Quick Stats</CardTitle>
-            {/* STUB: These are placeholder numbers - replace with real data later */}
+            <CardDescription>Stats from the {'<YEAR>'} Season</CardDescription>
           </CardHeader>
           <CardContent>
             {/* Grid with 3 columns - each column shows a stat */}
@@ -132,21 +132,21 @@ export default function HomePage() {
               {/* STAT 1 - Drivers */}
               <div>
                 {/* Big number on top */}
-                <div className="text-3xl font-bold text-blue-600">20</div>
+                <div className="text-3xl font-bold text-blue-600">45</div>
                 {/* Label below */}
                 <div className="text-sm text-slate-600 dark:text-slate-400">Drivers</div>
               </div>
               
-              {/* STAT 2 - Teams */}
+              {/* STAT 2 - Cones */}
               <div>
-                <div className="text-3xl font-bold text-green-600">10</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Teams</div>
+                <div className="text-3xl font-bold text-green-600">124</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">Cones Killed</div>
               </div>
               
               {/* STAT 3 - Races */}
               <div>
-                <div className="text-3xl font-bold text-purple-600">23</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Races</div>
+                <div className="text-3xl font-bold text-purple-600">6</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">Events</div>
               </div>
               
               {/* STUB: Replace these numbers with real data from API */}

@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 
 // Import our pre-made card components (these are just styled divs)
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-
+import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 
 // ============================================================================
@@ -45,6 +45,9 @@ export default function EventList() {
   // error: holds error message, or null if no error
   const [error, setError] = useState<string | null>(null)
 
+  // Pagination state
+  const [itemsToShow, setItemsToShow] = useState(2) // Start by showing 2 items
+  const ITEMS_PER_PAGE = 2          // Number of items to load each time
 
   // ------------------------------------------------------------------
   // FETCH DATA WHEN COMPONENT LOADS - Like window.onload in vanilla JS
@@ -90,6 +93,30 @@ export default function EventList() {
     
   }, []) // The [] means "run once when component loads" (like window.onload)
 
+  // ------------------------------------------------------------------
+  // PAGINATION HANDLERS
+  // ------------------------------------------------------------------
+  
+  // Show more items (add ITEMS_PER_PAGE to current count)
+  const handleShowMore = () => {
+    setItemsToShow(prev => prev + ITEMS_PER_PAGE)
+  }
+  
+  // Show less items (reset to initial count)
+  const handleShowLess = () => {
+    setItemsToShow(ITEMS_PER_PAGE)
+  }
+  
+  // Get only the events we want to display
+  const displayedEvents = events.slice(0, itemsToShow)
+  
+  // Check if there are more events to show
+  const hasMore = itemsToShow < events.length
+  
+  // Check if we're showing more than the initial amount
+  const canShowLess = itemsToShow > ITEMS_PER_PAGE
+
+
 
   // ------------------------------------------------------------------
   // RENDER - This is the HTML that gets displayed
@@ -104,8 +131,7 @@ export default function EventList() {
       {/* CARD HEADER */}
       <CardHeader>
         <CardTitle>Rally Events</CardTitle>
-        <CardDescription>View event details and live race updates.</CardDescription>
-        {/* STUB: Add more header elements here if needed */}
+        <CardDescription>View event details and live event updates.</CardDescription>
       </CardHeader>
       
       {/* CARD BODY */}
@@ -130,7 +156,8 @@ export default function EventList() {
             
             {/* LOOP THROUGH ARRAY - Like a for loop in vanilla JS */}
             {/* events.map() creates one div for each event */}
-            {events.map((event) => (
+            {/* EVENT ITEMS - Only show sliced array */}
+            {displayedEvents.map((event) => (
               
               // Each event item - clickable link that displays event details
               // Using Link component to make the whole card clickable
@@ -164,10 +191,41 @@ export default function EventList() {
             {events.length === 0 && (
               <p className="text-center text-slate-500 dark:text-slate-400">No upcoming events</p>
             )}
-            
-            {/* STUB: Add pagination or "Load More" button here */}
+
+
+
+            {/* PAGINATION BUTTONS */}
+
+                
+            {events.length > ITEMS_PER_PAGE && (
+                <div className="flex gap-3 justify-center pt-3 border-slate-200 dark:border-slate-700">
+                    {/* SHOW MORE BUTTON */}            
+                    {hasMore && (
+                    <button
+                        onClick={handleShowMore}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    >
+                        Show More
+                    </button>
+                    )}
+
+                    {/* SHOW LESS BUTTON */}
+                    {canShowLess && (
+                    <button
+                        onClick={handleShowLess}
+                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
+                    >
+                        Show Less
+                    </button>
+                    )}
+                </div>
+            )}
           </div>
         )}
+
+        <div className="flex gap-3 mt-1 justify-center text-xs text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700">
+            {events.length > 0 &&  ` ${displayedEvents.length} of ${events.length}`}
+        </div>
         
       </CardContent>
     </Card>

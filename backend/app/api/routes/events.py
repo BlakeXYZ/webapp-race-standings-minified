@@ -40,9 +40,13 @@ async def get_events():
     """
 
     events_data = [
-        {"id": 1, "name": "Grand Prix 1", "date": "2024-07-01"},
-        {"id": 2, "name": "Grand Prix 2", "date": "2024-07-15"},
-        {"id": 3, "name": "Grand Prix 3", "date": "2024-07-29"},
+        {"id": 1, "name": "Rallycross #73, points event #6", "date": "2024-11-24"},
+        {"id": 2, "name": "Rallycross #72, points event #5", "date": "2024-11-03"},
+        {"id": 3, "name": "Rallycross #71, points event #4", "date": "2024-09-29"},
+        {"id": 4, "name": "Rallycross #70, points event #3", "date": "2024-06-30"},
+        {"id": 5, "name": "Rallycross #69, points event #2", "date": "2024-06-09"},
+        {"id": 6, "name": "Rallycross #68, points event #1", "date": "2024-02-25"},
+
     ]
 
     # Placeholder for actual data retrieval logic
