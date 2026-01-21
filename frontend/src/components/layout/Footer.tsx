@@ -18,7 +18,7 @@ export default function Footer() {
         </p>
         <p className="text-slate-400">Made with ❤️ by Blake K.</p>
         <p className="text-slate-400">
-          © {new Date().getFullYear()} Race Standings App
+          © {new Date().getFullYear()} ARP Event Results App
         </p>
       </div>
     </footer>

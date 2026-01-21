@@ -16,7 +16,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-slate-900 text-white shadow-lg">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold ">Race Standings App</Link>
+          <Link to="/" className="text-xl font-bold ">ARP Event Results</Link>
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex gap-6 items-center">

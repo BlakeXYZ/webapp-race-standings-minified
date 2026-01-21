@@ -39,11 +39,12 @@ export default function HomePage() {
         <div className="text-center mb-12">
           {/* Main heading - text-5xl makes it big, font-bold makes it thick */}
           <h1 className="text-5xl font-bold mb-4 text-slate-900 dark:text-slate-100">
-            Austin Rally Project Event Standings
+            Austin Rally Project Event Results
           </h1>
           {/* Subheading - smaller text with lighter color */}
           <p className="text-xl text-slate-600 dark:text-slate-400">
             Track your laptimes and standings in real-time.
+
           </p>
         </div>
 
@@ -87,7 +88,7 @@ export default function HomePage() {
               {/* mt-auto pushes this to the bottom, self-start prevents stretching to full width */}
               <Link 
                 to="/standings" 
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors mt-auto self-start"
+                className="inline-block bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-colors mt-auto self-start"
               >
                 View Standings →
               </Link>

@@ -5,6 +5,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './components/mode-toggle/theme-provider'
 import Layout from './components/layout/Layout'
+import ScrollToTop from './components/layout/ScrollToTop'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import StandingsPage from './pages/StandingsPage'
@@ -18,6 +19,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Layout>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

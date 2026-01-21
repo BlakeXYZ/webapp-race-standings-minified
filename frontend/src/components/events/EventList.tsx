@@ -131,7 +131,7 @@ export default function EventList() {
       {/* CARD HEADER */}
       <CardHeader>
         <CardTitle>Rally Events</CardTitle>
-        <CardDescription>View event details and live event updates.</CardDescription>
+        <CardDescription>View event results and live updates.</CardDescription>
       </CardHeader>
       
       {/* CARD BODY */}
@@ -165,7 +165,12 @@ export default function EventList() {
               <Link
                 key={event.id}  // React needs a unique "key" for each item in a loop
                 to={`/events/${event.id}`}  // Navigate to individual event page (to be created)
-                className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md hover:scale-[1.02] transition-all duration-200 cursor-pointer"
+                className="group gap-8 flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-700 
+                bg-slate-50 dark:bg-slate-800 
+                hover:border-blue-400 dark:hover:border-blue-500 
+                hover:shadow-md hover:scale-[1.01] 
+                transition-all duration-200 cursor-pointer"
+                
               >
                 {/* LEFT SIDE - Event name */}
                 <div className="flex items-center gap-4">
@@ -178,12 +183,20 @@ export default function EventList() {
                   {/* STUB: Add event icon or image here */}
                 </div>
                 
-                {/* RIGHT SIDE - Event date */}
-                <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">
-                  {event.date}
-                </span>
+                {/* RIGHT SIDE - Event date with arrow indicator */}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                    {event.date}
+                  </span>
+                  {/* Arrow: Always visible on mobile, appears on hover on desktop */}
+                  <span className="text-slate-400 dark:text-slate-500 
+                  md:opacity-0 md:group-hover:opacity-100 
+                  md:-translate-x-1 md:group-hover:translate-x-0 
+                  transition-all duration-200">
+                    →
+                  </span>
+                </div>
                 
-                {/* STUB: Add more data here (e.g., location, status, etc.) */}
               </Link>
             ))}
             
@@ -203,7 +216,7 @@ export default function EventList() {
                     {hasMore && (
                     <button
                         onClick={handleShowMore}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                        className="px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 transition"
                     >
                         Show More
                     </button>
@@ -213,7 +226,7 @@ export default function EventList() {
                     {canShowLess && (
                     <button
                         onClick={handleShowLess}
-                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
+                        className="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition"
                     >
                         Show Less
                     </button>
