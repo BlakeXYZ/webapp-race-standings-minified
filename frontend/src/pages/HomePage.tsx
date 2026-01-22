@@ -44,7 +44,9 @@ export default function HomePage() {
           {/* Subheading - smaller text with lighter color */}
           <p className="text-xl text-slate-600 dark:text-slate-400">
             Track your laptimes and standings in real-time.
-
+          </p>
+          <p className="mt-2 text-xl font-semibold italic text-slate-400 dark:text-slate-500">
+            🛠️ Webapp Under Construction! 🛠️
           </p>
         </div>
 

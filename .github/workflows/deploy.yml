@@ -1,239 +1,104 @@
 # ==============================================================================
 # CI/CD WORKFLOW - Automated Build and Deployment
 # ==============================================================================
-# This workflow automatically:
-# 1. Builds Docker images when you push code to GitHub
-# 2. Pushes images to GitHub Container Registry (GHCR)
-# 3. Deploys to your VPS server
-#
-# Triggered on: Push to 'main' branch or Pull Requests
-# ==============================================================================
 
 name: Build and Deploy to VPS
 
-# ------------------------------------------------------------------
-# TRIGGER - When does this workflow run?
-# ------------------------------------------------------------------
 on:
-  push:
-    branches: [ main ]      # Run when pushing to main branch
-  pull_request:
-    branches: [ main ]      # Run on PRs to main (but don't deploy)
+  - push
 
-# ------------------------------------------------------------------
-# ENVIRONMENT VARIABLES - Used throughout the workflow
-# ------------------------------------------------------------------
+permissions:
+  contents: read
+  packages: write
+
 env:
-  REGISTRY: ghcr.io                                           # GitHub Container Registry
-  BACKEND_IMAGE_NAME: ${{ github.repository }}-backend       # Image name: username/repo-backend
-  FRONTEND_IMAGE_NAME: ${{ github.repository }}-frontend     # Image name: username/repo-frontend
+  REGISTRY: ghcr.io
+  BACKEND_IMAGE: ${{ github.repository_owner }}/race-backend   
+  FRONTEND_IMAGE: ${{ github.repository_owner }}/race-frontend 
 
 
 # ==============================================================================
-# JOB 1: BUILD AND PUSH - Build Docker images and push to registry
+# JOB 1: BUILD AND PUSH
 # ==============================================================================
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest                # Use Ubuntu runner
-    permissions:
-      contents: read                      # Read repository code
-      packages: write                     # Write to GitHub Packages
+    if: "contains(github.event.head_commit.message, '[build]')"
+    runs-on: ubuntu-latest
 
     steps:
       # ----------------------------------------------------------------
-      # STEP 1: Get the code from your repository
+      # STEP 1: Checkout code
       # ----------------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
       # ----------------------------------------------------------------
-      # STEP 2: Login to GitHub Container Registry
+      # STEP 2: Login to GHCR
       # ----------------------------------------------------------------
-      # Authenticates with GHCR so we can push images
-      # GITHUB_TOKEN is automatically provided by GitHub Actions
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}              # Your GitHub username
-          password: ${{ secrets.GITHUB_TOKEN }}      # Auto-generated token
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # ----------------------------------------------------------------
-      # STEP 3: Generate metadata for backend image
-      # ----------------------------------------------------------------
-      # Creates tags like: main, pr-123, sha-abc123, v1.0.0
-      - name: Extract metadata for backend
-        id: meta-backend
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch                    # Tag with branch name (main)
-            type=ref,event=pr                        # Tag PRs (pr-123)
-            type=semver,pattern={{version}}          # Tag releases (v1.0.0)
-            type=semver,pattern={{major}}.{{minor}}  # Tag releases (v1.0)
-            type=sha                                 # Tag with commit SHA
-
-      # ----------------------------------------------------------------
-      # STEP 4: Build and push backend Docker image
+      # STEP 3: Build and push backend
       # ----------------------------------------------------------------
       - name: Build and push backend image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
-          context: ./backend                                      # Build from backend folder
-          push: ${{ github.event_name != 'pull_request' }}       # Don't push on PRs
-          tags: ${{ steps.meta-backend.outputs.tags }}
-          labels: ${{ steps.meta-backend.outputs.labels }}
-          # STUB: Add build arguments here if needed
-          # build-args: |
-          #   BUILD_DATE=${{ github.event.head_commit.timestamp }}
-          #   VERSION=${{ github.sha }}
-
-      # ----------------------------------------------------------------
-      # STEP 5: Generate metadata for frontend image
-      # ----------------------------------------------------------------
-      - name: Extract metadata for frontend
-        id: meta-frontend
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+          context: ./backend
+          push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha
+            ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
+            ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
 
       # ----------------------------------------------------------------
-      # STEP 6: Build and push frontend Docker image
+      # STEP 4: Build and push frontend
       # ----------------------------------------------------------------
       - name: Build and push frontend image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
-          context: ./frontend                                    # Build from frontend folder
-          push: ${{ github.event_name != 'pull_request' }}      # Don't push on PRs
-          tags: ${{ steps.meta-frontend.outputs.tags }}
-          labels: ${{ steps.meta-frontend.outputs.labels }}
-          # Pass production API URL at build time
-          # STUB: Add GitHub secret PRODUCTION_API_URL = https://yourdomain.com
-          # Backend will be proxied at yourdomain.com/api by Nginx on VPS
+          context: ./frontend
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest
+            ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
           build-args: |
             VITE_API_URL=${{ secrets.PRODUCTION_API_URL }}
 
-
 # ==============================================================================
-# JOB 2: DEPLOY - Deploy to VPS server (only on main branch)
+# JOB 2: DEPLOY 
 # ==============================================================================
   deploy:
-    needs: build-and-push                                        # Wait for build to finish
+    if: "contains(github.event.head_commit.message, '[deploy]')"
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Only deploy on main
+    needs:
+      - build-and-push
 
     steps:
-      # ----------------------------------------------------------------
-      # STEP 1: SSH into VPS and deploy
-      # ----------------------------------------------------------------
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.0
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create env file
+        run: |
+          echo "GIT_COMMIT_HASH=${{ github.sha }}" >> ./envfile
+          echo "BACKEND_IMAGE=${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest" >> ./envfile
+          echo "FRONTEND_IMAGE=${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest" >> ./envfile
+
+      - name: Docker Stack Deploy
+        uses: cssnr/stack-deploy-action@v1
         with:
-          host: ${{ secrets.VPS_HOST }}           # STUB: Set in GitHub Secrets
-          username: ${{ secrets.VPS_USERNAME }}   # STUB: Set in GitHub Secrets
-          key: ${{ secrets.VPS_SSH_KEY }}         # STUB: Set in GitHub Secrets (private key)
-          port: ${{ secrets.VPS_PORT || 22 }}     # STUB: Set in GitHub Secrets (default 22)
-          script: |
-            # Navigate to app directory on VPS
-            cd ${{ secrets.VPS_APP_PATH || '/opt/race-standings' }}
-            
-            # Login to GitHub Container Registry from VPS
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            
-            # Pull latest images that were just built
-            docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}:main
-            docker pull ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:main
-            
-            # Stop and remove old containers
-            docker-compose -f docker-compose.prod.yml down
-            
-            # Start new containers with latest images
-            docker-compose -f docker-compose.prod.yml up -d
-            
-            # Clean up old/unused images to save disk space
-            docker image prune -af
-            
-            # Show running containers (for verification)
-            docker ps
-
-
-# ==============================================================================
-# REQUIRED GITHUB SECRETS - Add these in your repository settings
-# ==============================================================================
-# Go to: Settings > Secrets and variables > Actions > New repository secret
-#
-# Required secrets:
-# 
-# 1. VPS_HOST
-#    Description: IP address or domain of your VPS
-#    Example: "123.45.67.89" or "myserver.com"
-#
-# 2. VPS_USERNAME
-#    Description: SSH username for VPS
-#    Example: "root" or "ubuntu" or "deploy"
-#
-# 3. VPS_SSH_KEY
-#    Description: Private SSH key for authentication
-#    How to get: Run `cat ~/.ssh/id_rsa` on your local machine
-#    Note: The public key must be in VPS ~/.ssh/authorized_keys
-#
-# 4. VPS_PORT (optional)
-#    Description: SSH port (default is 22)
-#    Example: "22" or "2222"
-#
-# 5. VPS_APP_PATH (optional)
-#    Description: Where app is deployed on VPS
-#    Example: "/opt/race-standings" or "/home/ubuntu/app"
-#
-# Optional secrets for advanced setup:
-#
-# 6. PRODUCTION_DATABASE_URL
-#    Description: Production database connection string
-#    Example: "postgresql://user:pass@localhost/dbname"
-#
-# 7. PRODUCTION_API_URL
-#    Description: Production backend URL for frontend
-#    Example: "https://api.myapp.com"
-#
-# ==============================================================================
-
-
-# ==============================================================================
-# STUB: Additional deployment steps
-# ==============================================================================
-#
-# Add database migrations:
-# - name: Run migrations
-#   script: |
-#     docker exec race-standings-backend alembic upgrade head
-#
-# Add Slack/Discord notifications:
-# - name: Notify deployment
-#   uses: 8398a7/action-slack@v3
-#   with:
-#     status: ${{ job.status }}
-#     webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-#
-# Add health check:
-# - name: Health check
-#   run: |
-#     sleep 10
-#     curl -f https://myapp.com/health || exit 1
-#
-# Add rollback on failure:
-# - name: Rollback on failure
-#   if: failure()
-#   script: |
-#     docker-compose -f docker-compose.prod.yml down
-#     docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}:previous
-#     docker-compose -f docker-compose.prod.yml up -d
-#
-# ==============================================================================
-
+          name: race-stack
+          file: docker-compose.prod.yml
+          host: austinrallyprojectresults.com
+          user: deploy
+          ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          env_file: ./envfile
+          registry_auth: true
+          # View stack info on VPS with:
+          #   docker stack ls
+          #   docker service ls
+          #   docker service ps race-standings-stack_backend --no-trunc
+          #   docker service ps race-standings-stack_frontend --no-trunc

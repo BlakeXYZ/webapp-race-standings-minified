@@ -52,9 +52,11 @@ async def get_standings():
     # return {"standings": standings}
     
     standings_data = [
-        {"position": 1, "driver": "Driver 1", "points": 100},
-        {"position": 2, "driver": "Driver 2", "points": 85},
-        {"position": 3, "driver": "Driver 3", "points": 70},
+        {"position": 1, "driver": "Placeholder Driver 1", "points": 100},
+        {"position": 2, "driver": "Placeholder Driver 2", "points": 85},
+        {"position": 3, "driver": "Placeholder Driver 3", "points": 70},
+        {"position": 4, "driver": "Placeholder Driver 4", "points": 60},
+        {"position": 5, "driver": "Placeholder Driver 5", "points": 50},
     ]
     
     return {"standings": standings_data}

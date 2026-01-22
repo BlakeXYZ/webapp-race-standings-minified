@@ -189,7 +189,7 @@ export default function EventList() {
                     {event.date}
                   </span>
                   {/* Arrow: Always visible on mobile, appears on hover on desktop */}
-                  <span className="text-slate-400 dark:text-slate-500 
+                  <span className="text-slate-700 dark:text-slate-300 
                   md:opacity-0 md:group-hover:opacity-100 
                   md:-translate-x-1 md:group-hover:translate-x-0 
                   transition-all duration-200">
