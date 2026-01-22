@@ -17,7 +17,7 @@ version: '3.8'
 
 services:
   
-  
+
   # ----------------------------------------------------------------------------
   # BACKEND SERVICE - FastAPI application
   # ----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ services:
     # Traefik labels for routing (if using Traefik reverse proxy)
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.race-frontend.loadbalancer.server.port=5000"
+      - "traefik.http.services.race-frontend.loadbalancer.server.port=80"
       - "traefik.http.routers.race-frontend.rule=Host(`austinrallyprojectresults.com`)"
       - "traefik.http.routers.race-frontend.entrypoints=websecure"
       - "traefik.http.routers.race-frontend.tls.certresolver=myresolver"
