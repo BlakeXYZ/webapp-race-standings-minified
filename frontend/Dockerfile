@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine as build
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
@@ -13,8 +13,8 @@ RUN npm install
 COPY . .
 
 # STUB: Set production API URL as build argument
-# On VPS: docker build --build-arg VITE_API_URL=https://yourdomain.com
-# Backend will be at yourdomain.com/api (proxied by Nginx to backend:8000)
+# On VPS: docker build --build-arg VITE_API_URL=https://api.yourdomain.com
+# Backend will be at api.yourdomain.com (Traefik routes subdomain to backend:8000)
 ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 
