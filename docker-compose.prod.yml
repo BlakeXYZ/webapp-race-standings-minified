@@ -42,7 +42,7 @@ services:
       - API_V1_STR=/api/v1
       
       # CORS origins - allows frontend to call backend
-      - BACKEND_CORS_ORIGINS=https://austinrallyprojectresults.com,https://www.austinrallyprojectresults.com
+      - BACKEND_CORS_ORIGINS=["https://austinrallyprojectresults.com","https://www.austinrallyprojectresults.com"]
       
       # Git commit hash for version tracking (set by GitHub Actions)
       - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
