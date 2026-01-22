@@ -27,7 +27,7 @@ services:
     # Traefik labels for routing (if using Traefik reverse proxy)
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.race-backend.loadbalancer.server.port=8000"
+      - "traefik.http.services.race-backend.loadbalancer.server.port=5000"
       - "traefik.http.routers.race-backend.rule=Host(`api.austinrallyprojectresults.com`)"
       - "traefik.http.routers.race-backend.entrypoints=websecure"
       - "traefik.http.routers.race-backend.tls.certresolver=myresolver"
