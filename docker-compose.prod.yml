@@ -42,7 +42,7 @@ services:
       - API_V1_STR=/api/v1
       
       # CORS origins - allows frontend to call backend
-      - BACKEND_CORS_ORIGINS=["https://austinrallyprojectresults.com","https://www.austinrallyprojectresults.com"]
+      - BACKEND_CORS_ORIGINS=["https://austinrallyprojectresults.com"]
       
       # Git commit hash for version tracking (set by GitHub Actions)
       - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
@@ -91,14 +91,10 @@ services:
     # Traefik labels for routing (if using Traefik reverse proxy)
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.race-frontend.loadbalancer.server.port=80"
-      - "traefik.http.routers.race-frontend.rule=Host(`austinrallyprojectresults.com`) || Host(`www.austinrallyprojectresults.com`)"
+      - "traefik.http.services.race-frontend.loadbalancer.server.port=5000"
+      - "traefik.http.routers.race-frontend.rule=Host(`austinrallyprojectresults.com`)"
       - "traefik.http.routers.race-frontend.entrypoints=websecure"
       - "traefik.http.routers.race-frontend.tls.certresolver=myresolver"
-      # Redirect www to non-www (optional)
-      - "traefik.http.middlewares.race-redirect-www.redirectregex.regex=^https://www\\.(.+)"
-      - "traefik.http.middlewares.race-redirect-www.redirectregex.replacement=https://$${1}"
-      - "traefik.http.routers.race-frontend.middlewares=race-redirect-www"
     
     networks: 
       - webnet
