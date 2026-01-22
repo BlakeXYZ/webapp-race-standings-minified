@@ -13,9 +13,8 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  BACKEND_IMAGE: ${{ github.repository_owner }}/race-backend   
-  FRONTEND_IMAGE: ${{ github.repository_owner }}/race-frontend 
-
+  BACKEND_IMAGE: blakexyz/race-backend
+  FRONTEND_IMAGE: blakexyz/race-frontend
 
 # ==============================================================================
 # JOB 1: BUILD AND PUSH
@@ -100,5 +99,5 @@ jobs:
           # View stack info on VPS with:
           #   docker stack ls
           #   docker service ls
-          #   docker service ps race-standings-stack_backend --no-trunc
-          #   docker service ps race-standings-stack_frontend --no-trunc
+          #   docker service ps race-stack_backend --no-trunc
+          #   docker service ps race-stack_frontend --no-trunc
