@@ -72,6 +72,7 @@ async def get_standings():
 # HTTP Method: GET
 # URL Parameter: driver_id (the number in the URL)
 # Returns: Standing for one specific driver
+# ==============================================================================
 
 @router.get("/{driver_id}")
 async def get_driver_standing(driver_id: int):

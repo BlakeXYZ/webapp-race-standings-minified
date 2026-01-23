@@ -78,7 +78,7 @@ export default function EventsDropDownItems() {
         {/* Dynamically render each event */}
         {!loading && events.map((event) => (
             <DropdownMenuItem key={event.id} asChild>
-            <Link to={`/events/${event.id}`} className='cursor-pointer'>
+            <Link to={`/events/${event.date}`} className='cursor-pointer'>
                 {event.name}
             </Link>
             </DropdownMenuItem>

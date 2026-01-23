@@ -54,3 +54,50 @@ async def get_events():
 
 
 # ==============================================================================
+# ROUTE 2: GET EVENT BY DATE
+# ==============================================================================
+# This creates a route at: /api/v1/events/{event_date}
+# HTTP Method: GET
+# URL Parameter: event_date (the date in the URL)
+# Returns: Details for one specific event
+@router.get("/{event_date}")
+async def get_event_by_date(event_date: str):
+    """
+    Get event details by date
+    
+    Returns details for a specific event identified by its date.
+    
+    Example response:
+    {
+        "event": {"id": 1, "name": "Grand Prix 1", "date": "2024-07-01", "location": "Location 1"}
+    }
+    """
+    
+    # ------------------------------------------------------------------
+    # MOCK DATA - Replace this with database query
+    # ------------------------------------------------------------------
+    # Currently returning fake data for demonstration
+    # STUB: Replace with actual database query
+    # Example with database:
+    # from app.models import Event
+    # event = await Event.get_by_date(event_date)
+    # if not event:
+    #     raise HTTPException(status_code=404, detail="Event not found")
+    # return {"event": event}
+    
+    # Use the same events_data as in get_events
+    events_data = [
+        {"id": 1, "name": "Rallycross #73, points event #6", "date": "2024-11-24"},
+        {"id": 2, "name": "Rallycross #72, points event #5", "date": "2024-11-03"},
+        {"id": 3, "name": "Rallycross #71, points event #4", "date": "2024-09-29"},
+        {"id": 4, "name": "Rallycross #70, points event #3", "date": "2024-06-30"},
+        {"id": 5, "name": "Rallycross #69, points event #2", "date": "2024-06-09"},
+        {"id": 6, "name": "Rallycross #68, points event #1", "date": "2024-02-25"},
+    ]
+
+    # Find event by date
+    event = next((e for e in events_data if e["date"] == event_date), None)
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    
+    return {"event": event}

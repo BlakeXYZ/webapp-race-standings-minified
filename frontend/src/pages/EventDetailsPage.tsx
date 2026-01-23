@@ -9,6 +9,8 @@ import { useState, useEffect } from 'react'
 // Import our pre-made card components (these are just styled divs)
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
+import { useParams } from "react-router-dom";
+
 
 // ============================================================================
 // DATA TYPES - Defining what our data looks like (optional but helpful)
@@ -16,28 +18,31 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 // This is like a schema - it says each standing has these 3 properties
 // Think of it as documentation for what data structure we expect
-interface Standing {
-  position: number    // Driver's position (1, 2, 3, etc.)
-  driver: string      // Driver's name
-  points: number      // Points earned
+interface EventDetail {
+  name: string    // Event name
+  date: string      // Event date
 }
 
 
 // ============================================================================
-// STANDINGS PAGE COMPONENT - Displays race standings
+// EVENT DETAILS PAGE COMPONENT - Displays race standings
 // ============================================================================
 
-export default function StandingsPage() {
-  
+export default function EventDetailsPage() {
+
+    
+    
   // ------------------------------------------------------------------
   // STATE VARIABLES - Think of these like regular variables, but when
   // they change, the page automatically updates to show the new value
   // ------------------------------------------------------------------
+
+  const { event_date } = useParams();
   
   // standings: holds array of driver data
   // setStandings: function to update standings (like standings = newValue)
   // useState([]) means it starts as an empty array
-  const [standings, setStandings] = useState<Standing[]>([])
+  const [eventDetails, setEventDetails] = useState<EventDetail | null>(null)
   
   // loading: true when fetching data, false when done
   const [loading, setLoading] = useState(true)
@@ -51,13 +56,18 @@ export default function StandingsPage() {
   // ------------------------------------------------------------------
   
   useEffect(() => {
+
+    if (!event_date) return;
+    setLoading(true);
+    setError(null);
+
     // This function gets data from the backend API
-    const fetchStandings = async () => {
+    const fetchEventDetails = async () => {
       try {
         // API URL: In dev uses proxy, in production uses env variable
         const apiUrl = import.meta.env.VITE_API_URL 
-          ? `${import.meta.env.VITE_API_URL}/api/v1/standings/`
-          : '/api/v1/standings/'
+          ? `${import.meta.env.VITE_API_URL}/api/v1/events/${event_date}`
+          : `/api/v1/events/${event_date}/`
         
         // Call the backend API (like using fetch() in vanilla JS)
         const response = await fetch(apiUrl)
@@ -69,9 +79,9 @@ export default function StandingsPage() {
         
         // Convert response to JSON (same as vanilla JS)
         const data = await response.json()
-        
+
         // Update the standings variable with the data we got
-        setStandings(data.standings)
+        setEventDetails(data.event)
 
         // We're done loading
         setLoading(false)
@@ -84,13 +94,12 @@ export default function StandingsPage() {
     }
 
     // Run the fetch function
-    fetchStandings()
+    fetchEventDetails()
     
     // STUB: Add more data fetching here if needed
     // Example: fetchDriverDetails(), fetchRaceSchedule(), etc.
     
-  }, []) // The [] means "run once when page loads" (like window.onload)
-
+  }, [event_date]) // The [] means "run once when page loads" (like window.onload)
 
   // ------------------------------------------------------------------
   // RENDER - This is the HTML that gets displayed
@@ -105,7 +114,7 @@ export default function StandingsPage() {
         
         {/* PAGE TITLE */}
         <h1 className="text-4xl font-bold text-center mb-8 text-slate-900 dark:text-slate-100">
-          Season Standings
+          Event Details Page Title
           {/* STUB: Customize title text here */}
         </h1>
         
@@ -114,8 +123,8 @@ export default function StandingsPage() {
           
           {/* CARD HEADER */}
           <CardHeader>
-            <CardTitle>Current Standings</CardTitle>
-            <CardDescription>Latest driver rankings and points</CardDescription>
+            <CardTitle>Event Details</CardTitle>
+            <CardDescription>Event Details Description</CardDescription>
             {/* STUB: Add more header elements here if needed */}
           </CardHeader>
           
@@ -137,44 +146,13 @@ export default function StandingsPage() {
             
             {/* If NOT loading and NO error, show the standings */}
             {!loading && !error && (
-              <div className="space-y-3">
+              <div className="space-y-3 text-center">
+                <p className="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">{eventDetails.name}</p>
+                <p className="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">{eventDetails.date}</p>
+
+                {/* STUB: Add more event details here */}
                 
-                {/* LOOP THROUGH ARRAY - Like a for loop in vanilla JS */}
-                {/* standings.map() creates one div for each standing */}
-                {standings.map((standing) => (
-                  
-                  // Each standing item - position, driver name, points
-                  <div
-                    key={standing.position}  // React needs a unique "key" for each item in a loop
-                    className="flex items-center gap-4 justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                  >
-                    {/* LEFT SIDE - Position and driver name */}
-                    <div className="flex items-center gap-4">
-                      
-                      {/* Position number - {standing.position} shows the value */}
-                      <span className="text-2xl font-bold text-slate-900 dark:text-slate-100 w-8">
-                        {standing.position}
-                      </span>
-                      
-                      {/* Driver name */}
-                      <span className="text-lg text-slate-700 dark:text-slate-300">
-                        {standing.driver}
-                      </span>
-                      
-                      {/* STUB: Add driver photo here */}
-                      {/* Example: <img src={standing.photo} alt={standing.driver} /> */}
-                    </div>
-                    
-                    {/* RIGHT SIDE - Points */}
-                    <span className="text-xl font-semibold text-blue-600 dark:text-blue-400">
-                      {standing.points} pts
-                    </span>
-                    
-                    {/* STUB: Add more data here (e.g., wins, team, etc.) */}
-                  </div>
-                ))}
-                
-                {/* STUB: Add pagination or "Load More" button here */}
+    
               </div>
             )}
             
@@ -186,4 +164,7 @@ export default function StandingsPage() {
         
     </div>
   )
+
+
+
 }

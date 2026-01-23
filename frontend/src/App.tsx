@@ -9,6 +9,7 @@ import ScrollToTop from './components/layout/ScrollToTop'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import StandingsPage from './pages/StandingsPage'
+import EventDetailsPage from './pages/EventDetailsPage'
 
 
 // ============================================================================
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/standings" element={<StandingsPage />} />
+          <Route path="/events/:event_date" element={<EventDetailsPage />} />
           <Route path="*" element={<div className="text-center text-2xl mt-20">404 - Page Not Found</div>} />
         </Routes>
       </Layout>

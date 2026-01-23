@@ -164,10 +164,17 @@ export default function EventList() {
               // Modern hover effects: border, shadow, and slight scale
               <Link
                 key={event.id}  // React needs a unique "key" for each item in a loop
-                to={`/events/${event.id}`}  // Navigate to individual event page (to be created)
-                className="group gap-8 flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-700 
+                to={`/events/${event.date}`}  // Navigate to individual event page (to be created)
+                className="group gap-8 flex items-stretch justify-between p-4 rounded-lg 
+                
+                border border-l-8 border-l-blue-500 dark:border-l-blue-600
+                
                 bg-slate-50 dark:bg-slate-800 
+                
+                border-slate-200 dark:border-slate-700 
+                
                 hover:border-blue-400 dark:hover:border-blue-500 
+
                 hover:shadow-md hover:scale-[1.01] 
                 transition-all duration-200 cursor-pointer"
                 
@@ -189,11 +196,15 @@ export default function EventList() {
                     {event.date}
                   </span>
                   {/* Arrow: Always visible on mobile, appears on hover on desktop */}
-                  <span className="text-slate-700 dark:text-slate-300 
+                  <span className="
+                  
+                  text-slate-700 dark:text-slate-300 
+
                   md:opacity-0 md:group-hover:opacity-100 
-                  md:-translate-x-1 md:group-hover:translate-x-0 
+                  md:-translate-x-1 md:group-hover:translate-x-0
+         
                   transition-all duration-200">
-                    →
+                    → 
                   </span>
                 </div>
                 
@@ -216,7 +227,12 @@ export default function EventList() {
                     {hasMore && (
                     <button
                         onClick={handleShowMore}
-                        className="px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 transition"
+                        className="px-4 py-2  
+                        rounded-lg
+                        text-white
+                        bg-blue-500 hover:bg-blue-600  
+                        dark:bg-blue-800 dark:hover:bg-blue-900
+                        transition"
                     >
                         Show More
                     </button>
@@ -226,7 +242,7 @@ export default function EventList() {
                     {canShowLess && (
                     <button
                         onClick={handleShowLess}
-                        className="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition"
+                        className="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-700 transition"
                     >
                         Show Less
                     </button>

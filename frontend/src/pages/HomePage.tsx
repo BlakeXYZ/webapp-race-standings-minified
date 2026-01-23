@@ -90,7 +90,13 @@ export default function HomePage() {
               {/* mt-auto pushes this to the bottom, self-start prevents stretching to full width */}
               <Link 
                 to="/standings" 
-                className="inline-block bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-colors mt-auto self-start"
+                className="inline-block 
+
+                bg-blue-500 hover:bg-blue-600  
+                dark:bg-blue-800 dark:hover:bg-blue-900
+
+
+                text-white px-4 py-2 rounded-lg transition-colors mt-auto self-start"
               >
                 View Standings →
               </Link>
