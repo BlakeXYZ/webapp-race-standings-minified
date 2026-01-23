@@ -1,7 +1,20 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <footer className="bg-slate-900 text-white py-6 mt-auto">
       <div className="container mx-auto px-4 text-center">
+
+        <p className="text-slate-400 mb-4">
+          <Link to="/" className="hover:text-white transition-colors">
+            Home
+          </Link>
+          <br />
+          <Link to="/about" className="hover:text-white transition-colors">
+            About
+          </Link>
+          
+        </p>
 
 
         <p className="text-slate-400 mb-4">

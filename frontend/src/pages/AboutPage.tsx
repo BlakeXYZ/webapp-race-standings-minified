@@ -37,7 +37,7 @@ export default function AboutPage() {
         {/* mb-6: margin-bottom of 1.5rem (24px) for spacing between cards */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle>Location</CardTitle>
           </CardHeader>
           <CardContent>
             {/* Project description paragraph */}
@@ -57,16 +57,32 @@ export default function AboutPage() {
                 </a>
             </p>
                 
+            </div>
+          </CardContent>
+        </Card>
 
-
-
-
+        {/* ============================================================ */}
+        {/* SECTION 4: CONTACT */}
+        {/* ============================================================ */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Contact</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-slate-700 dark:text-slate-300 space-y-4">
+                
+              <p className="text-slate-400 mb-4">
+                <a href="mailto:Josh@AustinRallyProject.com" className="hover:text-white transition-colors">
+                  Josh@AustinRallyProject.com
+                </a>
+              </p>
+                  
             </div>
           </CardContent>
         </Card>
        
         {/* ============================================================ */}
-        {/* SECTION 4: LINKS & RESOURCES */}
+        {/* SECTION 5: LINKS & RESOURCES */}
         {/* ============================================================ */}
         <Card>
           <CardHeader>
