@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useParams } from "react-router-dom";
 
 
-
+import DriverTable from '@/components/event_details_page/DriverTable'
 import DriverCard from '@/components/event_details_page/DriverCard'
 import SearchNSort from '@/components/search_n_sort/SearchNSort';
 
@@ -232,6 +232,17 @@ export default function EventDetailsPage() {
         {/* DRIVER STANDINGS */}
         {!loading && !error && eventDetails && (
           <div>
+
+            {/* 
+
+            TODO: implement another "view" for driver. alternative to drivercards.
+            will be a table view with sortable columns, and a card view with driver cards. user can toggle between the two views. 
+          
+            */}
+
+            <DriverTable drivers={filteredDrivers.length > 0 ? filteredDrivers : drivers} />
+
+
             {filteredDrivers.map((driverData, index) => (
               <DriverCard 
                 key={driverData.overall} 
