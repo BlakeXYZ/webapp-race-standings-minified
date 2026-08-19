@@ -81,9 +81,7 @@ export default function SearchNSort({ drivers, onFilteredDriversChange }: Search
                 <DropdownMenuContent className="w-48">
 
 
-                  <DropdownMenuItem asChild>
-                    <button
-                      onClick={() => setSortBy('rank')}
+                  <DropdownMenuItem onClick={() => setSortBy('rank')}
                       className={` ${
                         sortBy === 'rank' 
                           ? 'text-white dark:text-white'
@@ -91,13 +89,11 @@ export default function SearchNSort({ drivers, onFilteredDriversChange }: Search
                       }`}
                     >
                       Sort by Rank
-                    </button>
+
                   </DropdownMenuItem>
 
 
-                  <DropdownMenuItem asChild>
-                    <button
-                      onClick={() => setSortBy('name')}
+                  <DropdownMenuItem onClick={() => setSortBy('name')}
                       className={` ${
                         sortBy === 'name' 
                           ? 'text-white dark:text-white' 
@@ -105,7 +101,6 @@ export default function SearchNSort({ drivers, onFilteredDriversChange }: Search
                       }`}
                     >
                       Sort by Name
-                    </button>
                   </DropdownMenuItem>
 
    
