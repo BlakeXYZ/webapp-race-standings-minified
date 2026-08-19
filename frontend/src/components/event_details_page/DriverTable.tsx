@@ -78,7 +78,7 @@ export default function DriverTable({ drivers }: { drivers: Driver[] }) {
                 </TableHeader>
                 <TableBody>
                     {drivers.map((driver) => {  
-                        const isOdd = driver.overall % 2 === 1
+                        const isOdd = Number(driver.overall) % 2 === 1
                         
                         return (
                         <TableRow key={driver.overall} className={isOdd ? `${rowDark}` : `${rowLight}`}>
