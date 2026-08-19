@@ -17,17 +17,17 @@ export default function DriverTable({ drivers }: { drivers: Driver[] }) {
     const headerClass = "font-bold text-sm inline-block -rotate-[75deg] origin-center" // Rotate only the text
     const cellPrimary = "text-sm"
     const cellSecondary = "text-sm text-slate-500 dark:text-slate-400" // For less important info
-    const stickyOverallLeft = "bg-background sticky left-0 z-10 font-semibold w-10 min-w-10 max-w-10 text-center"
-    const stickyDriverLeft = "bg-background sticky left-[40px] z-10 font-semibold max-w-[100px] sm:max-w-[500px] overflow-hidden text-ellipsis"
+    const stickyOverallLeft = "bg-background dark:bg-slate-900 sticky left-0 z-10 font-semibold w-10 min-w-10 max-w-10 text-center"
+    const stickyDriverLeft = "bg-background dark:bg-slate-900 sticky left-[40px] z-10 font-semibold max-w-[100px] sm:max-w-[500px] overflow-hidden text-ellipsis"
 
-    const rowDark = "bg-slate-100 dark:bg-slate-800/50"
-    const rowLight = "bg-background dark:bg-slate-900/50"
+    const rowDark = "bg-slate-100 dark:bg-slate-800"
+    const rowLight = "bg-background dark:bg-slate-900"
 
     return (
         <Card className="overflow-hidden">
           <div className="max-h-[600px] overflow-auto">
             <Table>
-                <TableHeader className="sticky top-0 z-20 bg-background">
+                <TableHeader className="sticky top-0 z-20 bg-background dark:bg-slate-900">
                     <TableRow className="h-24">
                         <TableHead className={`${stickyOverallLeft} z-40`}>
                           <span className={headerClass}>Overall</span>
