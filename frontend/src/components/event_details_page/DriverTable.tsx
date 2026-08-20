@@ -15,8 +15,8 @@ import { Driver } from '@/types/event'
 export default function DriverTable({ drivers }: { drivers: Driver[] }) {
     // Reusable style strings
     const headerClass = "font-bold text-xs sm:text-base inline-block -rotate-[35deg] origin-center" // Rotate only the text
-    const cellPrimary = "text-xs sm:text-sm"
-    const cellSecondary = "text-xs sm:text-sm text-slate-500 dark:text-slate-400" // For less important info
+    const cellPrimary = "text-xs sm:text-sm p-2"
+    const cellSecondary = "text-xs sm:text-sm p-2 text-slate-500 dark:text-slate-400" // For less important info
     const stickyOverallLeft = "bg-background dark:bg-slate-900 sticky left-0 z-10 font-semibold w-10 min-w-10 max-w-10 text-center"
     const stickyDriverLeft = "bg-background dark:bg-slate-900 sticky left-[40px] z-10 font-semibold max-w-[100px] sm:max-w-[500px] overflow-hidden text-ellipsis"
 
@@ -89,28 +89,28 @@ export default function DriverTable({ drivers }: { drivers: Driver[] }) {
                               {driver.driver.toUpperCase()}
                             </TableCell>
                             <TableCell className={`${cellSecondary} font-semibold max-w-[170px] sm:max-w-[500px] overflow-hidden text-ellipsis whitespace-nowrap`}>{driver.car}</TableCell>
-                            <TableCell className={cellSecondary}>{driver.class}</TableCell>
-                            <TableCell className={cellSecondary}>{driver.class_rank}</TableCell>
-                            <TableCell className={`${cellPrimary} font-semibold`}>{driver.avg_time}s</TableCell>
-                            <TableCell className={cellSecondary}>
+                            <TableCell className={`${cellSecondary} text-center`}>{driver.class}</TableCell>
+                            <TableCell className={`${cellSecondary} text-center`}>{driver.class_rank}</TableCell>
+                            <TableCell className={`${cellSecondary} text-center font-semibold`}>{driver.avg_time}s</TableCell>
+                            <TableCell className={`${cellSecondary} text-center`}>
                               {driver.differential ? `+${driver.differential}s` : '--'}
                             </TableCell>
-                            <TableCell className={cellSecondary}>{driver.runs}</TableCell>
-                            <TableCell className={`${cellPrimary} text-green-600 dark:text-green-400 font-semibold`}>
+                            <TableCell className={`${cellSecondary} text-center`}>{driver.runs}</TableCell>
+                            <TableCell className={`${cellPrimary} text-center text-green-600 dark:text-green-400 font-semibold`}>
                               {driver.min}s
                             </TableCell>
-                            <TableCell className={`${cellPrimary} text-red-600 dark:text-red-400 font-semibold`}>
+                            <TableCell className={`${cellPrimary} text-center text-red-600 dark:text-red-400 font-semibold`}>
                               {driver.max}s
                             </TableCell>
-                            <TableCell className={cellSecondary}>{driver.min_max_diff}s</TableCell>
-                            <TableCell className={cellSecondary}>{driver.raw_time}s</TableCell>
-                            <TableCell className={`${cellPrimary} ${Number(driver.cones) > 0 ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-slate-500 dark:text-slate-400'}`}>
+                            <TableCell className={`${cellSecondary} text-center`}>{driver.min_max_diff}s</TableCell>
+                            <TableCell className={`${cellSecondary} text-center`}>{driver.raw_time}s</TableCell>
+                            <TableCell className={`${cellPrimary} text-center ${Number(driver.cones) > 0 ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-slate-500 dark:text-slate-400'}`}>
                               {driver.cones}
                             </TableCell>
-                            <TableCell className={`${cellPrimary} ${Number(driver.penalty) > 0 ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-slate-500 dark:text-slate-400'}`}>
+                            <TableCell className={`${cellPrimary} text-center ${Number(driver.penalty) > 0 ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-slate-500 dark:text-slate-400'}`}>
                               {driver.penalty}s
                             </TableCell>
-                            <TableCell className={`${cellPrimary} font-medium`}>{driver.total_time}s</TableCell>
+                            <TableCell className={`${cellPrimary} text-center font-medium pr-8`}>{driver.total_time}s</TableCell>
                         </TableRow>
                         )
                     })}
