@@ -14,9 +14,9 @@ import { Driver } from '@/types/event'
 
 export default function DriverTable({ drivers }: { drivers: Driver[] }) {
     // Reusable style strings
-    const headerClass = "font-bold text-sm inline-block -rotate-[75deg] origin-center" // Rotate only the text
-    const cellPrimary = "text-sm"
-    const cellSecondary = "text-sm text-slate-500 dark:text-slate-400" // For less important info
+    const headerClass = "font-bold text-xs sm:text-base inline-block -rotate-[35deg] origin-center" // Rotate only the text
+    const cellPrimary = "text-xs sm:text-sm"
+    const cellSecondary = "text-xs sm:text-sm text-slate-500 dark:text-slate-400" // For less important info
     const stickyOverallLeft = "bg-background dark:bg-slate-900 sticky left-0 z-10 font-semibold w-10 min-w-10 max-w-10 text-center"
     const stickyDriverLeft = "bg-background dark:bg-slate-900 sticky left-[40px] z-10 font-semibold max-w-[100px] sm:max-w-[500px] overflow-hidden text-ellipsis"
 
@@ -25,7 +25,7 @@ export default function DriverTable({ drivers }: { drivers: Driver[] }) {
 
     return (
         <Card className="overflow-hidden">
-          <div className="max-h-[600px] overflow-auto">
+          <div className="max-h-[600px] overflow-auto [mask-image:linear-gradient(to_right,black_90%,transparent)]">
             <Table>
                 <TableHeader className="sticky top-0 z-20 bg-background dark:bg-slate-900">
                     <TableRow className="h-24">
@@ -77,8 +77,8 @@ export default function DriverTable({ drivers }: { drivers: Driver[] }) {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {drivers.map((driver) => {  
-                        const isOdd = Number(driver.overall) % 2 === 1
+                    {drivers.map((driver, index) => {  
+                        const isOdd = index % 2 === 1; //use array position to determine if row is odd or even for styling
                         
                         return (
                         <TableRow key={driver.overall} className={isOdd ? `${rowDark}` : `${rowLight}`}>
@@ -88,7 +88,7 @@ export default function DriverTable({ drivers }: { drivers: Driver[] }) {
                             <TableCell className={`${cellPrimary} ${stickyDriverLeft} ${isOdd ? `${rowDark}` : `${rowLight}`}`}>
                               {driver.driver.toUpperCase()}
                             </TableCell>
-                            <TableCell className={cellSecondary}>{driver.car}</TableCell>
+                            <TableCell className={`${cellSecondary} font-semibold max-w-[170px] sm:max-w-[500px] overflow-hidden text-ellipsis whitespace-nowrap`}>{driver.car}</TableCell>
                             <TableCell className={cellSecondary}>{driver.class}</TableCell>
                             <TableCell className={cellSecondary}>{driver.class_rank}</TableCell>
                             <TableCell className={`${cellPrimary} font-semibold`}>{driver.avg_time}s</TableCell>

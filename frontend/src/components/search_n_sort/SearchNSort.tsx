@@ -84,7 +84,7 @@ export default function SearchNSort({ drivers, onFilteredDriversChange }: Search
                   <DropdownMenuItem onClick={() => setSortBy('rank')}
                       className={` ${
                         sortBy === 'rank' 
-                          ? 'text-white dark:text-white'
+                          ? 'text-slate-300 dark:text-white'
                           : 'text-slate-500 dark:text-slate-500'
                       }`}
                     >
@@ -96,7 +96,7 @@ export default function SearchNSort({ drivers, onFilteredDriversChange }: Search
                   <DropdownMenuItem onClick={() => setSortBy('name')}
                       className={` ${
                         sortBy === 'name' 
-                          ? 'text-white dark:text-white' 
+                          ? 'text-slate-300 dark:text-white' 
                           : 'text-slate-500 dark:text-slate-500'
                       }`}
                     >

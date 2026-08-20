@@ -130,6 +130,29 @@ def _transform_runs_to_array(driver_data: Dict[str, Any], total_runs: int) -> Di
     
     return driver_data
 
+def _sanitize_driver_car_name(driver_data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Sanitize the 'car' fields in the driver data.
+    
+    Args:
+        driver_data: Driver dictionary with 'car' keys
+
+    Returns:
+        Driver dictionary with sanitized 'car' values
+    """
+    for key in driver_data.keys():
+        if 'car' in key:
+            value = driver_data[key]
+            if isinstance(value, str):
+                # Remove text of: FWD, RWD, AWD (case insensitive) and strip whitespace
+                value = re.sub(r'\b(FWD|RWD|AWD)\b', '', value, flags=re.IGNORECASE)
+                # logger.info(f"Sanitizing car value for key '{key}': Original='{driver_data[key]}', Sanitized='{value.strip()}'")
+                driver_data[key] = value.strip()
+            else:
+                driver_data[key] = value  # Keep as is if not a string
+    return driver_data
+
+
 def organize_data_into_structured_format(sheet_data: List[List[str]], sheet_name: str) -> Dict[str, Any]:
     """Organize raw sheet data into a structured format (list of dictionaries).
 
@@ -204,6 +227,10 @@ def organize_data_into_structured_format(sheet_data: List[List[str]], sheet_name
     for row in structured_data:
         # Transform runs to array format for each driver
         row = _transform_runs_to_array(row, total_runs)
+        # Sanitize car values
+        row = _sanitize_driver_car_name(row)
+        # Update the structured_data list with the transformed row
+        structured_data[structured_data.index(row)] = row
 
     drivers_by_overall = {row['overall']: row for row in structured_data if 'overall' in row}
     drivers_by_name = {row['driver']: row for row in structured_data if 'driver' in row}

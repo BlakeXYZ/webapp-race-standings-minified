@@ -10,7 +10,7 @@ import {
 import { useTheme } from "@/components/mode-toggle/theme-provider"
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   return (
     <DropdownMenu>
@@ -22,15 +22,31 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem 
+          onClick={() => setTheme("light")}
+          className={theme === "light" 
+            ? 'text-slate-300 dark:text-white' 
+            : 'text-slate-500 dark:text-slate-500'}
+        >
+
           Light
           <Sun className="ml-auto h-4 w-4" />
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem 
+          onClick={() => setTheme("dark")}
+          className={theme === "dark" 
+            ? 'text-slate-300 dark:text-white' 
+            : 'text-slate-500 dark:text-slate-500'}
+        >
           Dark
           <Moon className="ml-auto h-4 w-4" />
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem 
+          onClick={() => setTheme("system")}
+          className={theme === "system" 
+            ? 'text-slate-300 dark:text-white' 
+            : 'text-slate-500 dark:text-slate-500'}
+        >
           System
           <Laptop className="ml-auto h-4 w-4" />
         </DropdownMenuItem>
