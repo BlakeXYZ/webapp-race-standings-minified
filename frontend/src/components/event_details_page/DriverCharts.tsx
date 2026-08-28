@@ -31,6 +31,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 import { Driver } from '@/types/event'
+import { Card } from "../ui/card"
 
 export function DriverChartHorizontal_stacked({ 
   drivers,
@@ -259,11 +260,12 @@ export function DriverChartVertical_side_by_side({
 
 
   return (
+    <Card className="overflow-hidden mt-5 bg-background dark:bg-slate-900">
     <div className="w-full overflow-x-auto [mask-image:linear-gradient(to_right,black_90%,transparent)]">  {/* Scrollable wrapper */}
     <ChartContainer 
       config={chartConfig} 
-      className="min-h-[200px] w-full mt-10 -mx-8"
-      style={{ width: `${Math.max(500, drivers.length * spacePerDriver)}px`, maxHeight: '500px' }} 
+      className="min-h-[200px] w-full mt-5 -mx-7"
+      style={{ width: `${Math.max(400, drivers.length * spacePerDriver)}px`, maxHeight: '400px' }} 
     >
       <BarChart 
         accessibilityLayer 
@@ -305,6 +307,7 @@ export function DriverChartVertical_side_by_side({
       </BarChart>
     </ChartContainer>
     </div>
+    </Card>
   )
 }
 
