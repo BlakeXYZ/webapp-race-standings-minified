@@ -6,6 +6,10 @@ import { ChartContainer, type ChartConfig } from "@/components/ui/chart"
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
+import { useTheme } from "@/components/mode-toggle/theme-provider"
+
+
+
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -212,6 +216,7 @@ export function DriverChartVertical_side_by_side({
   drivers: Driver[]
   totalRuns: number 
 }) {
+  const { theme } = useTheme()
   
   // Transform drivers into chart data format
   const chartData = drivers.map((driver) => {
@@ -229,8 +234,11 @@ export function DriverChartVertical_side_by_side({
 
   // Create dynamic chart config
   const chartConfig: ChartConfig = {}
-  const colors = ['#8b5cf6', '#3b82f6', '#1d4ed8', '#0891b2', '#10b981', '#eab308', '#f97316', '#ef4444']
-
+  const colors_dark = ['#8b5cf6', '#3b82f6', '#1d4ed8', '#0891b2', '#10b981', '#eab308', '#f97316', '#ef4444']
+  const colors_mid = ['#9d70f8', '#4d94f8', '#2c68e7', '#17a8c3', '#22c68d', '#f1b916', '#fa8329', '#f35b5b']
+  const colors_light = ['#a78bfa', '#60a5fa', '#3b82f6', '#06b6d4', '#34d399', '#fbbf24', '#fb923c', '#f87171']
+  const colors = theme === 'light' ? colors_light : colors_dark
+  
   for (let i = 1; i <= totalRuns; i++) {
     chartConfig[`run${i}`] = {
       label: `Run ${i}`,
@@ -238,8 +246,8 @@ export function DriverChartVertical_side_by_side({
     }
   }
 
-  const minTime = Math.floor(Math.min(...drivers.map(d => parseFloat(d.min) || 0)) / 10) * 10
-  const maxTime = Math.ceil(Math.max(...drivers.map(d => parseFloat(d.max) || 0)) / 10) * 10
+  const minTime = Math.floor(Math.min(...drivers.map(d => parseFloat(d.min) || 0)) / 10) * 10;
+  const maxTime = Math.ceil(Math.max(...drivers.map(d => parseFloat(d.max) || 0)) / 5) * 5;
   
   // Calculate space needed per driver group
   const barsPerGroup = totalRuns
@@ -251,16 +259,15 @@ export function DriverChartVertical_side_by_side({
 
 
   return (
-    <div className="w-full overflow-x-auto">  {/* Scrollable wrapper */}
+    <div className="w-full overflow-x-auto [mask-image:linear-gradient(to_right,black_90%,transparent)]">  {/* Scrollable wrapper */}
     <ChartContainer 
       config={chartConfig} 
-      className="min-h-[200px] w-full mt-10"
-      style={{ width: `${Math.max(800, drivers.length * spacePerDriver)}px`, maxHeight: '800px' }} 
+      className="min-h-[200px] w-full mt-10 -mx-8"
+      style={{ width: `${Math.max(500, drivers.length * spacePerDriver)}px`, maxHeight: '500px' }} 
     >
       <BarChart 
         accessibilityLayer 
         data={chartData} 
-        margin={{ bottom: 80 }}  // Space for rotated labels
         barCategoryGap={50}
         barGap={15}
         barSize={30}
@@ -270,7 +277,8 @@ export function DriverChartVertical_side_by_side({
           dataKey="driver" 
           type="category"
           interval={0}
-          tick={{ fontSize: 12, angle: -45, textAnchor: 'end' }}
+          tick={{ fontSize: 12, textAnchor: 'end' }}
+          angle={-45}
           height={80}
           tickFormatter={(value) => {
             const truncated = value.length > 10 ? value.substring(0, 10) + '...' : value
@@ -281,6 +289,7 @@ export function DriverChartVertical_side_by_side({
           type="number"
           domain={[minTime, maxTime]}
           hide={false}
+          tickFormatter={(value) => `${value}s`}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
 
