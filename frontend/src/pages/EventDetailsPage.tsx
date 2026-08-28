@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 
 import DriverTable from '@/components/event_details_page/DriverTable'
 import DriverCard from '@/components/event_details_page/DriverCard'
-import { DriverChartVertical_stacked, DriverChartVertical_side_by_side } from '@/components/event_details_page/DriverCharts'
+import { DriverChartHorizontal_stacked, DriverChartHorizontal_side_by_side, DriverChartVertical_side_by_side } from '@/components/event_details_page/DriverCharts'
 import { ChartExampleVertical_stacked, ChartExampleVertical_side_by_side } from '@/components/event_details_page/example_chart'
 import SearchNSort from '@/components/search_n_sort/SearchNSort';
 
@@ -249,11 +249,20 @@ export default function EventDetailsPage() {
 
 
               
-            <DriverChartVertical_stacked 
+            {/* <DriverChartHorizontal_stacked 
+              drivers={filteredDrivers.length > 0 ? filteredDrivers : drivers} 
+              totalRuns={eventDetails.overview.total_runs}
+              /> */}
+
+            {/* <DriverChartHorizontal_side_by_side
+              drivers={filteredDrivers.length > 0 ? filteredDrivers : drivers} 
+              totalRuns={eventDetails.overview.total_runs}
+              /> */}
+
+            <DriverChartVertical_side_by_side
               drivers={filteredDrivers.length > 0 ? filteredDrivers : drivers} 
               totalRuns={eventDetails.overview.total_runs}
               />
-
 
 
             {filteredDrivers.map((driverData, index) => (
