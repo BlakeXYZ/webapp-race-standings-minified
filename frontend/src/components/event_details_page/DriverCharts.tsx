@@ -75,7 +75,7 @@ export function DriverChartVertical_stacked({
     <ChartContainer 
       config={chartConfig} 
       className="min-h-[200px] w-full mb-10 mt-10"
-      style={{ minHeight: `${drivers.length * 35}px` }}
+      style={{ height: `${drivers.length * 35}px` }}
     >
       <BarChart 
         accessibilityLayer 
