@@ -14,6 +14,8 @@ import { useParams } from "react-router-dom";
 
 import DriverTable from '@/components/event_details_page/DriverTable'
 import DriverCard from '@/components/event_details_page/DriverCard'
+import { DriverChartVertical_stacked, DriverChartVertical_side_by_side } from '@/components/event_details_page/DriverCharts'
+import { ChartExampleVertical_stacked, ChartExampleVertical_side_by_side } from '@/components/event_details_page/example_chart'
 import SearchNSort from '@/components/search_n_sort/SearchNSort';
 
 
@@ -170,19 +172,25 @@ export default function EventDetailsPage() {
               <h2 className="text-2xl font-light text-center mb-8 text-slate-900 dark:text-slate-100">
                 {eventDetails.date}
               </h2>
+              {/* <p className="text-lg font-light text-center text-slate-900 dark:text-slate-100">Jump To:</p>
+              <div className="flex justify-center gap-4 mb-8">
+                <a href="#driver-standings" className="text-blue-600 dark:text-blue-400 hover:underline">Table View</a>
+                <a href="#driver-charts" className="text-blue-600 dark:text-blue-400 hover:underline">Bar Charts</a>
+                <a href="#driver-cards" className="text-blue-600 dark:text-blue-400 hover:underline">Driver Cards</a>
+              </div> */}
+
             </>
           )}
+
+        
 
         {/* Search, Filter, and Sort Components */}
         {!loading && !error && eventDetails && (
           <SearchNSort
-            drivers={drivers}
-            onFilteredDriversChange={handleFilteredDriversChange}
+          drivers={drivers}
+          onFilteredDriversChange={handleFilteredDriversChange}
           />
         )}
-
-
-
 
         
         {/* CARD COMPONENT - Just a fancy styled box */}
@@ -216,10 +224,7 @@ export default function EventDetailsPage() {
               <div className="space-y-3 text-center">
                 <p className="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">{eventDetails.name}</p>
                 <p className="text-xl font-semibold mb-4 text-slate-900 dark:text-slate-100">{eventDetails.date}</p>
-
                 {/* STUB: Add more event details here */}
-                
-    
               </div>
             )}
           </CardContent>
@@ -241,6 +246,14 @@ export default function EventDetailsPage() {
             */}
 
             <DriverTable drivers={filteredDrivers.length > 0 ? filteredDrivers : drivers} />
+
+
+              
+            <DriverChartVertical_stacked 
+              drivers={filteredDrivers.length > 0 ? filteredDrivers : drivers} 
+              totalRuns={eventDetails.overview.total_runs}
+              />
+
 
 
             {filteredDrivers.map((driverData, index) => (
