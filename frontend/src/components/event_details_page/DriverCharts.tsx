@@ -265,7 +265,7 @@ export function DriverChartVertical_side_by_side({
     <ChartContainer 
       config={chartConfig} 
       className="min-h-[200px] w-full mt-5 -mx-7"
-      style={{ width: `${Math.max(400, drivers.length * spacePerDriver)}px`, maxHeight: '400px' }} 
+      style={{ width: `${Math.max(400, drivers.length * spacePerDriver)}px`, maxHeight: '45vh' }} 
     >
       <BarChart 
         accessibilityLayer 
