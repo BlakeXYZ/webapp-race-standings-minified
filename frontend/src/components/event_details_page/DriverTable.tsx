@@ -25,10 +25,10 @@ export default function DriverTable({ drivers }: { drivers: Driver[] }) {
 
     return (
         <Card className="overflow-hidden">
-          <div className="max-h-[600px] overflow-auto [mask-image:linear-gradient(to_right,black_90%,transparent)]">
+          <div className="max-h-[400px] overflow-auto [mask-image:linear-gradient(to_right,black_90%,transparent)]">
             <Table>
                 <TableHeader className="sticky top-0 z-20 bg-background dark:bg-slate-900">
-                    <TableRow className="h-24">
+                    <TableRow className="h-16">
                         <TableHead className={`${stickyOverallLeft} z-40 text-center`}>
                           <span className={headerClass}>Overall</span>
                         </TableHead>

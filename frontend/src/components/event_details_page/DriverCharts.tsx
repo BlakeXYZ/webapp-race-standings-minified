@@ -264,15 +264,15 @@ export function DriverChartVertical_side_by_side({
     <div className="w-full overflow-x-auto [mask-image:linear-gradient(to_right,black_90%,transparent)]">  {/* Scrollable wrapper */}
     <ChartContainer 
       config={chartConfig} 
-      className="min-h-[200px] w-full mt-5 -mx-7"
+      className="min-h-[45vh] w-full mt-5 -mx-7"
       style={{ width: `${Math.max(400, drivers.length * spacePerDriver)}px`, maxHeight: '45vh' }} 
     >
       <BarChart 
         accessibilityLayer 
         data={chartData} 
-        barCategoryGap={50}
-        barGap={15}
-        barSize={30}
+        barCategoryGap={35}
+        barGap={12}
+        barSize={22}
       >
         <CartesianGrid vertical={false} />
         <XAxis 
@@ -281,11 +281,12 @@ export function DriverChartVertical_side_by_side({
           interval={0}
           tick={{ fontSize: 12, textAnchor: 'end' }}
           angle={-45}
-          height={80}
+          height={65}
           tickFormatter={(value) => {
             const truncated = value.length > 10 ? value.substring(0, 10) + '...' : value
             return truncated.toUpperCase()
           }}
+          fontWeight={600} //font-semibold
         />
         <YAxis 
           type="number"
