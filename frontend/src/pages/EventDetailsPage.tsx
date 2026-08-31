@@ -1,6 +1,7 @@
 // ============================================================================
 // IMPORTS - Bringing in tools we need
 // ============================================================================
+import { Loader2 } from 'lucide-react'
 
 // useState: Store variables that can change (like a regular variable in JS)
 // useEffect: Run code when the page loads (like window.onload in vanilla JS)
@@ -154,7 +155,10 @@ export default function EventDetailsPage() {
           
           {/* If loading is true, show "Loading..." */}
           {loading && (
-            <p className="text-center text-slate-600 dark:text-slate-400">Loading...</p>
+            <div className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <p className="text-center text-slate-600 dark:text-slate-400">Loading Event Details...</p>
+            </div>
           )}
           
           {/* If there's an error, show the error message */}
@@ -210,7 +214,10 @@ export default function EventDetailsPage() {
             
             {/* If loading is true, show "Loading..." */}
             {loading && (
-              <p className="text-center text-slate-600 dark:text-slate-400">Loading...</p>
+              <div className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <p className="text-center text-slate-600 dark:text-slate-400">Loading...</p>
+              </div>
             )}
             
             {/* If there's an error, show the error message */}

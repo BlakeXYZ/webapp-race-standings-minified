@@ -153,10 +153,10 @@ export default function EventList() {
         
         {/* If loading is true, show "Loading..." */}
         {loading && (
-        <div className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400">
-          <Loader2 className="w-4 h-4 animate-spin" />
-          <p>Loading events...</p>
-        </div>
+          <div className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <p>Loading Events...</p>
+          </div>
         )}
         
         {/* If there's an error, show the error message */}

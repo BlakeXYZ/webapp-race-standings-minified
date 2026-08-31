@@ -1,7 +1,7 @@
 // ============================================================================
 // IMPORTS - Bringing in tools we need
 // ============================================================================
-
+import { Loader2 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
@@ -72,7 +72,10 @@ export default function EventsDropDownItems() {
     <>
         {/* Show loading state */}
         {loading && (
-            <DropdownMenuItem disabled>Loading...</DropdownMenuItem>
+            <div className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <DropdownMenuItem disabled>Loading...</DropdownMenuItem>
+            </div>
         )}
         
         {/* Dynamically render each event */}
