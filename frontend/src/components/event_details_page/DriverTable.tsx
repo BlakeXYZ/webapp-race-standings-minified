@@ -14,7 +14,7 @@ import { Driver } from '@/types/event'
 
 export default function DriverTable({ drivers }: { drivers: Driver[] }) {
     // Reusable style strings
-    const headerClass = "font-bold text-xs sm:text-base/none inline-block -rotate-[35deg] origin-center" // Rotate only the text
+    const headerClass = "font-bold text-xs sm:text-sm inline-block -rotate-[35deg] origin-center" // Rotate only the text
     const cellPrimary = "text-xs sm:text-sm p-2"
     const cellSecondary = "text-xs sm:text-sm p-2 text-slate-500 dark:text-slate-400" // For less important info
     const stickyOverallLeft = "bg-background dark:bg-slate-900 sticky left-0 z-10 font-semibold w-10 min-w-10 max-w-10 text-center"
